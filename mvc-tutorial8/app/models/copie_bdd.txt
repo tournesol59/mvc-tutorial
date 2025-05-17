@@ -1,0 +1,38 @@
+
+Textes complets
+bookid
+booktitle
+bookauthor
+bookowner
+bookdesc
+bookedit
+
+Éditer Éditer
+Copier Copier
+Supprimer Supprimer
+1
+Mathematiques pour le traitement du signal
+Maitine Bergounioux
+Frederic
+License
+Dunod;
+
+Éditer Éditer
+Copier Copier
+Supprimer Supprimer
+2
+Detection et estimation des signaux - questions
+David Declercq
+Frederic
+Ingenieur
+Lavoisier;
+
+Éditer Éditer
+Copier Copier
+Supprimer Supprimer
+3
+Identification des systemes
+E. Landau
+Frederic
+Ingenieur
+Lavoisier;   

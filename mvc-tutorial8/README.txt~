@@ -1,0 +1,12 @@
+mvc-tutorial/  contient une version sans mysqli/PDO pour se connecter a la base de donnees livresdb mais utilise des tableaux constants
+ACTUEL en devpmt
+dernier message derreur:
+Fatal error: Uncaught Error: Class "app\models\PDO" not found in C:\Users\frede\phpStorm\mvc-tutorial\app\models\Model.php:27 
+(voir C:\xampp\php\php.ini for ext php_pdo_mysql.dll and php_odbc.dll)
+
+mvc-tutorial2/ comme son nom ne l indique pas, devra contenir la vraie classe "models\Model" pour se connecter a la base de donnes
+PAS en devpmt actuel mais aussi l'integration (un premier essai) de l'authentification ajoutee au traitement routage actuel dans 
+public/index.php
+
+mvc-tutorial4/ contient aussi l'authentification toujours avec des strutures
+conditionnelles et l'objet session mais avec une implementation objet mais qu il faut retester

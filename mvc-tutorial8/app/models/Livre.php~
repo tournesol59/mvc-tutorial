@@ -1,0 +1,112 @@
+<?php
+/**
+ *  instance
+ */
+namespace app\models;
+
+class Livre extends Model {
+   public $name;
+   public $title;
+   public $pubdate;
+   public function __construct() {
+  //    echo '<pre>';
+  //    var_dump($pname);
+  //    echo '</pre>';
+      // definir table par defaut dans ce modele
+      $this->table = "tblbook";
+      $this->id = 1;
+      $this->name = "JK Rowling";
+      //$this->pubdate = '1989-07-09'; //$pubdate;
+   }
+
+   public function getOneByTitle() {
+	   // db
+      $livres=[];
+      try {
+		$dbuser = "root";
+		$dbpass="";
+		$db = new \PDO("mysql:host=localhost; dbname=livresdb", $dbuser, $dbpass); // "livresdb" also valid
+		$sql = "SELECT * FROM tblbook WHERE title=:title";
+		$query = $db->prepare($sql);
+		$query->bindValue(":title", $this->title, \PDO::PARAM_STR);
+		$query->execute();
+		$livres = $query->fetchAll();
+      } catch (Exception $e) {
+         echo $e->errorMessage;
+      }
+      //echo '<pre>';
+      //var_dump($livres);
+      //echo '</pre>';      
+      return $livres;
+   }
+
+   public function getAllByName() {
+	   // db
+      $livres=[];
+      try {
+	 $dbuser = "root";
+	 $dbpass="";
+	 $db = new \PDO("mysql:host=localhost; dbname=livresdb", $dbuser, $dbpass); // "livresdb" also valid
+      $sql = "SELECT * FROM tblbook WHERE author=:author";
+      $query = $db->prepare($sql);
+      $query->bindValue(":author", $this->name, \PDO::PARAM_STR);
+      $query->execute();
+      $livres = $query->fetchAll();
+
+      } catch (Exception $e) {
+         echo $e->errorMessage;
+      }
+      //echo '<pre>';
+      //var_dump($livres);
+      //echo '</pre>';
+      return $livres;
+   }
+
+   
+   public function getAllByDate() {
+       $result=[];
+       $pubdateformat = date_format('Y-M-d', $pubdate);
+       $livres = [['id' => 1,
+                    'title' => 'Harry Potter at the School of Wizards',
+		    'author' => 'JKRowling',
+		    'pubdate' => '1997-12-12',
+	            'category' => 'R'],
+                ['id' => 2,
+                    'title' => 'Harry Potter and the Chamber of Secrets',
+		    'author' => 'JKRowling',
+		    'pubdate' => '1998-12-12',
+		    'category' => 'R'],
+                ['id' => 3,
+                    'title' => 'Harry 5',
+		    'author' => 'WShakespeare',
+		    'pubdate' => '1565',
+	            'category' => 'T']];
+
+       foreach ($livres as $livre) {
+          if ($livre["pubdate"] > $pubdateformat) {
+             array_push($result, $livre);
+	  }
+       }
+       return $result;
+   }
+
+   public function getAll() {
+	   // db
+      $livres=[];
+      try {
+	 $dbuser = "root";
+	 $dbpass="";
+	 $db = new \PDO("mysql:host=localhost; dbname=livresdb", $dbuser, $dbpass); // "livresdb" also valid
+      $sql = "SELECT * FROM tblbook";
+      $query = $db->prepare($sql);
+      $query->execute();
+      $livres = $query->fetchAll();
+
+      } catch (Exception $e) {
+         echo $e->errorMessage;
+      }
+   })
+      //echo '</pre>';
+      return $livres;
+
+}

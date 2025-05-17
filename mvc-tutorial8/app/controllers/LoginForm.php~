@@ -1,0 +1,39 @@
+<?php
+/*
+ * dynamic class LoginForm
+	// will use static call to LogApplication:getPost();
+ * 
+ */
+namespace app\controllers;
+
+class LoginForm {
+  protected String $username;
+  protected String $userpass;
+  
+  public function dologin() {
+   
+   require_once(ROOT.'app/models/Model.php');
+   require_once(ROOT.'app/models/User.php');
+   require_once(ROOT.'app/controllers/LogApplication.php');
+   $postData = LogApplication::getPostData();
+   /* dont work
+   foreach ($postData as $key => $values) {
+      $$key = $values;  // this will instanciate $username and $userpass TEST THIS
+   }
+   */
+   $this->username=$postData['username'];
+   $this->userpass=$postData['userpass'];
+   echo " vous avez entre: ".$this->username;
+   
+   $usermodel = new \app\models\User();
+   $user = $usermodel->getOneByName($this->username); // database query
+   if (password_verify($this->userpass, $user['pass'])) { // user["pass"] contains the ARGON2ID hashed output of password
+    // ON COURT CIRCUITE UN PEU POUR TESTER LA PARTIE MODEL
+       if (!isset($_SESSION["user"])) {
+	  $_SESSION["user"]=["name" => "laurence.peugny@gmail.com"]; // attention, cest un email en fait
+    //     return ["user" => "laurence.peugny@gmail.com"];   
+      }
+   }
+  }
+}
+?>

@@ -1,0 +1,56 @@
+<?php
+
+session_start();
+if (!isset($_SESSION["user"]["name"])) {
+    //header("Location: ./login.php");
+    // a tester 
+    $_SESSION["user"]=["name" => "laurence.peugny@gmail.com"]; // attention, cest un email en fait
+
+}
+if (isset($_POST)) {
+   if ((isset($_POST["author"])) && (!empty($_POST["author"])) ) {
+      $author = strip_tags($_POST["author"]);
+      $_SESSION["user"]["author"]=$author;
+   }
+   elseif ((isset($_POST["pubdate"])) && (!empty($_POST["pubdate"])) ) {
+      $pubdate = strip_tags($_POST["pubdate"]);
+      $_SESSION["user"]["pubdate"]=$pubdate;
+   }
+   // test si dans la session, la variable $_SESSION["user"]["isempactive"]
+   // est a un (true) pour, dans ce cas, proposer une demande une liste des prets en cours en suivant le design pattern MVC et un lien vers la methode "getEmpActive" du controller Emprunter
+}
+?>
+<?php if (isset($_SESSION["user"]["author"])) : ?>
+       <p>
+       <a href="index.php?p=livrescontrol/indexauthor/<?=$_SESSION["user"]["author"] ?>">livres de <?=$_SESSION["user"]["author"] ?></a>
+      </p>
+
+       <p>
+       <a href="/livrescontrol/indexauthor/<?=$_SESSION["user"]["author"] ?>">livre de <?=$_SESSION["user"]["author"] ?></a>
+      </p>
+  <?php unset($_SESSION["user"]["author"]) //free the session param ?>
+
+<?php elseif (isset($_SESSION["user"]["pubdate"])) : ?>
+       <p>
+<a href="index.php?p=livrescontrol/indexpubdate/<?=$_SESSION["user"]["pubdate"] ?>">livres publie apres <?=$_SESSION["user"]["pubdate"] ?></a>
+      </p>
+  <?php unset($_SESSION["user"]["pubdate"]) //free the session param ?>
+
+<?php else: ?>
+       <!-- form action="index.php" method="POST" -->
+       <form method="POST">
+
+        <h1>Recherche</h1>
+            <div class="mb-3">
+                <label for="author" class="form-label">Auteur</label>
+                <input type="text" class="form-control" id="author" name="author">
+            </div>
+            <div class="mb-3">
+                <label for="pubdate" class="form-label">Date publication</label>
+                <input type="text" class="form-control" id="pubdate" name="pubdate">
+            </div>
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+	</form>
+
+<?php endif; ?>
+

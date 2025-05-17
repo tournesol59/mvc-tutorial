@@ -1,0 +1,38 @@
+<?php
+/*
+ * static purpose class LogApplication, for dividing tasks 
+ */
+namespace app\controllers;
+
+class LogApplication {
+
+  // do NOT implement a skeleton for the whole application: just to be called for LoginForm class which should use the static methods
+
+   public static function getPath() {
+      echo $_SERVER['REQUEST_URI'];
+
+      return $_SERVER['REQUEST_URI'];
+   }
+
+   public static function getPostData() {
+	   //   after, public static function getPostData($dataNames) {
+      if ( (isset($_POST["email"])) && (isset($_POST["pass"])) && (!empty($_POST["email"])) && (!empty($_POST["pass"])) )
+      {
+	$username=filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+	echo " vous avez entre: ".$username;
+        $userpass=isset($_POST['password']) ? $_POST['password'] : "none";
+        echo " vous avez entre: ".$userpass;   
+	return ['username' => $username,
+		'userpass' => $userpass];
+      }
+      else {
+	return [];
+      }
+   }
+
+   public static function runlogin() {
+       require_once(ROOT."public/login.php");
+   }
+}
+
+?>

@@ -1,0 +1,11 @@
+<h1>Livres</h1>
+<table>
+
+<?php foreach($livres as $livre): ?>
+ <tr>
+ <td><?= $livre['title'] ?></td>
+
+ <td><?= $livre['author'] ?></td>>
+ </tr>
+<?php endforeach ?>
+</table>

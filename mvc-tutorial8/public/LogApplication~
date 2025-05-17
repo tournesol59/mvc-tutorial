@@ -1,0 +1,18 @@
+<?php
+/*
+ * class LogApplication 
+ */
+
+public class LogApplication {
+
+  // do NOT implement a skeleton for the whole application: just to be called for LoginForm class which should use the static methods
+
+   public static function getPath() {
+      echo $_SERVER['REQUEST_URI'];
+
+      return $_SERVER['REQUEST_URI'];
+   }
+
+}
+
+?>

@@ -1,0 +1,60 @@
+<?php
+/**
+* Modele abstrait de Connection et de requetes a une base de donnee
+* remplacee par des tables constantes pour linstant
+*/
+namespace app\models;
+
+abstract class Model {
+
+// TBD informations sur la base de donnees
+
+// propriete qui contiendra l instance de connexion
+   protected $_connexion;
+// Proprietes permettant de perso les requetes
+   public $table;
+   public $id;
+
+// fonction dinit
+   public function getConnection() {
+   // On supprime la connexion precedente
+      $this->_connexion = null;
+   // inserer ici un try catch
+      echo "la connexion devra etre cree ici";
+   }
+   
+   /**
+ *  Methodes communes
+ */  
+   public function getOne() {
+      if ($table==="articles") {
+         if ($id===1) {
+		 return ['id' => 1,
+                    'name' => 'rhode',
+                    'desc' => 'machine a laver'];
+         }
+      }
+   }
+
+   public function getAll() {
+      if ($table==="articles") {
+        return [['id' => 1,
+                 'name' => 'rhode',
+		 'desc' => 'machine a laver'],
+                ['id' => 2,
+                 'name' => 'LG',
+                 'desc' => 'refrigerateur']];
+      }
+   }
+   public function getAllCateg(string $categ) {
+    //  if ($table==="articles") {
+	   if ($categ==='R') {
+		   
+		 return ['id' => 1,
+                    'name' => 'rhode',
+                    'desc' => 'machine a laver'];
+         }
+    //  }
+   }   
+}
+?>

@@ -1,0 +1,55 @@
+<?php
+/**
+* Modele abstrait de Connection et de requetes a une base de donnee
+* remplacee par des tables constantes pour linstant
+*/
+namespace app\models;
+
+abstract class Model {
+
+// TBD informations sur la base de donnees
+   private $host = "localhost";
+   private $db_name = "blogdbdev"; // "livresdb" also exists as "livres"	
+   private $username = "root";
+   private $password = "";
+// propriete qui contiendra l instance de connexion
+   protected $_connexion;
+// Proprietes permettant de personnaliser les requetes
+   public $table;
+   public $id;
+
+// fonction init
+   public function getConnection() {
+   // On supprime la connexion precedente
+      $this->_connexion = null;
+
+      try {
+	  // perso: I should ask for better explaination why anislash \PDO
+          $this->_connexion = new \PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
+
+	  $this->_connexion->exec("set names utf8");
+          $this->_connexion->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+      } catch (PDOExeption $exception) {
+          echo "Erreur de connexion : " . $exception->getMessage();
+      }
+   }
+  
+   /**
+ *  Methodes communes
+ */  
+   public function getOne() {
+      $sql = "SELECT * FROM " . $this->table. " WHERE id=" .$this->id;
+      $query = $this->_connexion->prepare($sql);
+      $query->execute();
+      return $query->fetch();
+
+   }
+
+   public function getAll() {
+      $sql = "SELECT * FROM " . $this->table;
+      $query = $this->_connexion->prepare($sql);
+      $query->execute();
+      return $query->fetchAll();
+   }
+}
+?>

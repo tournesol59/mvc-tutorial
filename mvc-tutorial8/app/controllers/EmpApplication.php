@@ -1,0 +1,21 @@
+<?php
+class EmpApplication {
+	public static String $statusReserve="";
+	public static String $errorMessage="";
+	
+	public static function getParam() {
+		if ((isset($_POST['titlename'])) && (isset($_POST['idlivre']))) {
+			$statusReserve="checkingtitle";
+			$reserveid=$_POST['idlivre'];
+			$reservetitle=$_POST['titlename'];
+			return ['idlivre' => $reserveid, 'title' => $reservetitle];
+		}
+		else {
+			$statusReserve="notvalidparam";
+			$errorMessage="error, a valid identifier or title must be entered";
+			return [];
+		}
+	}
+	
+}
+?>

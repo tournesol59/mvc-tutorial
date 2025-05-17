@@ -1,0 +1,67 @@
+<?php 
+/*
+ * class LivreS
+ */
+namespace app\controllers;
+
+class Livres extends Controller {
+	
+   public function checktitle($title) {
+       require_once(ROOT."app/models/Model.php");
+       require_once(ROOT."app/models/Livre.php");
+       $this->loadmodel("Livre");
+       $this->model->title=$title;
+       // pour cherche si les 3 premiers mots du titre seulement correspondent
+       $titleparts=explode(" ", $title, 3);
+       $pattern = "/(".$titleparts[0].")*(".$titleparts[1].")/";
+      // if (isset($titleparts[2])) {
+      //    $pattern = $pattern."/".$titleparts[2];
+      // }
+       $result = $this->model->getAll();
+       foreach ($result as $item) {
+	  $matches=[];
+	  preg_match($pattern, $item['title'], $matches, PREG_OFFSET_CAPTURE);
+	  //echo '<pre>';
+          //var_dump($matches);
+	  //echo '</pre>';
+	//  if (isset($titleparts[2])) {
+	//     if ((isset($matches[0])) and (isset($matches[1])) and (isset($matches[2]))) {
+	//        $livres = $item;
+	//     }
+        //  }
+	//  else {
+	     if ((isset($matches[0]))) { //and (isset($matches[1]))) {
+                $livres = $item;
+		break;
+	     }
+	//  }
+       }
+       //uncomment the following line if you prefer test exact match in sql
+       $livres = $this->model->getOneByTitle();
+
+       // retourne directement le resultat, pas de vue pour cette methode auxiliaire direct pour user_emprunt.php
+       return $livres;
+   }
+	   
+   public function indexauthor($author) {
+       require_once(ROOT."app/models/Model.php");
+       require_once(ROOT."app/models/Livre.php");
+       $this->loadmodel("Livre");
+       $this->model->name=$author;
+       echo " author ".$this->model->name;
+       $livres = $this->model->getAllByName();
+       // envoie vers la vue "lire" dans le repertoire "views/livres/"
+       $this->render('lire', compact('livres'));
+   }
+
+   public function indexpubdate($pubdate) {
+       require_once(ROOT.".app/models/Model.php");
+       require_once(ROOT.".app/models/Livre.php");
+       $this->loadmodel("Livre");
+       $this->model->pubdate=$pubdate;
+       $livres = $this->model->getAllByDate();
+       // envoie vers la vue "lire" dans le repertoire "views/livres/"
+       $this->render('lire', compact('livres'));
+   }
+   
+}
